@@ -9,6 +9,8 @@ import com.example.admin.bakingapp.Data.RecipeContract;
 import com.example.admin.bakingapp.R;
 import com.example.admin.bakingapp.RecipeChild.Instructions.Instruction;
 
+import java.util.ArrayList;
+
 /**
  * Created by Admin on 11-Jul-17.
  */
@@ -17,6 +19,10 @@ public class RecipeDisplayChildActivity extends AppCompatActivity {
 
     private Instruction mInstruction;
 
+    private ArrayList<Instruction> mInstructionList;
+
+    private int step_index;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,10 +30,14 @@ public class RecipeDisplayChildActivity extends AppCompatActivity {
         if (getIntent() != null) {
             //Get EXTRA from intent and attach to Fragment as Argument
             mInstruction = getIntent().getParcelableExtra("android.intent.extra.TITLE");
+            mInstructionList = getIntent().getParcelableArrayListExtra("android.intent.extra.SUBJECT");
+            step_index = getIntent().getIntExtra("android.intent.extra.TITLE", -1);
 
             Bundle args = new Bundle();
 
             args.putParcelable("ARGUMENTS", mInstruction);
+            args.putParcelableArrayList("SUBJECT", mInstructionList);
+            args.putInt("TEXT", step_index);
 
             RecipeDisplayChildFragment displayChildFragment = new RecipeDisplayChildFragment();
             displayChildFragment.setArguments(args);

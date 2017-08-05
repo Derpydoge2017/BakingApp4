@@ -19,8 +19,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RecipeChild.RecipeChild"></activity>
-        <activity android:name=".RecipeDisplay.RecipeDisplayChildActivity"></activity>
+        <activity android:name=".RecipeChild.RecipeChild"
+            android:parentActivityName=".MainActivity"></activity>
+        <activity android:name=".RecipeDisplay.RecipeDisplayChildActivity"
+            android:parentActivityName=".RecipeChild.RecipeChild"></activity>
 
         <receiver android:name=".Widget.BakingAppWidget">
             <intent-filter>

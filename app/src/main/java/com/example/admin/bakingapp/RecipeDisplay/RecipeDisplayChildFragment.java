@@ -40,11 +40,15 @@ import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
+import java.util.ArrayList;
+
 import static android.content.Context.NOTIFICATION_SERVICE;
 
 public class RecipeDisplayChildFragment extends Fragment implements ExoPlayer.EventListener {
 
     private Instruction mInstruction;
+
+    private ArrayList<Instruction> mInstructionList;
 
     private TextView mInstructionText;
 
@@ -54,6 +58,8 @@ public class RecipeDisplayChildFragment extends Fragment implements ExoPlayer.Ev
 
     private Context context;
 
+    private int step_index;
+
     private SimpleExoPlayer mExoPlayer;
     private SimpleExoPlayerView mPlayerView;
     private static MediaSessionCompat mMediaSession;
@@ -62,8 +68,6 @@ public class RecipeDisplayChildFragment extends Fragment implements ExoPlayer.Ev
 
     private Button mPrevButton;
     private Button mNextButton;
-
-    private static int step_index = 0;
 
     public RecipeDisplayChildFragment(){
 
@@ -76,7 +80,10 @@ public class RecipeDisplayChildFragment extends Fragment implements ExoPlayer.Ev
         context = container.getContext();
 
         if (getArguments() != null) {
+
             mInstruction = getArguments().getParcelable("ARGUMENTS");
+            mInstructionList = getArguments().getParcelableArrayList("SUBJECT");
+            step_index = getArguments().getInt("TEXT");
 
             // Initialize the player view.
             mPlayerView = (SimpleExoPlayerView) rootView.findViewById(R.id.playerView);

@@ -92,7 +92,6 @@ public class RecipeChild extends AppCompatActivity implements AdapterView.OnItem
 
         FrameLayout fragmentItemDetail = (FrameLayout) findViewById(R.id.fragmentDetail);
 
-
         // If there is a second pane for details
         if (fragmentItemDetail != null) {
             isTwoPane = true;

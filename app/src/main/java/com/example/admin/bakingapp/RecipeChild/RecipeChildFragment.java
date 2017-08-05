@@ -34,21 +34,21 @@ public class RecipeChildFragment extends Fragment implements InstructionAdapter.
 
     private Context context;
 
-    protected static int step_index = 0;
-
     private final String KEY_INGREDIENT_STATE = "ingredient_state";
     private final String KEY_INSTRUCTION_STATE = "instruction_state";
 
+    private int step_index;
+
     private ArrayList<Ingredient> mIngredientList = new ArrayList<>();
     private ArrayList<Instruction> mInstructionList = new ArrayList<>();
+
+    private Instruction mInstruction;
 
     private IngredientAdapter mIngredientAdapter;
     private InstructionAdapter mInstructionAdapter;
 
     private RecyclerView mIngredientRV;
     private RecyclerView mInstructionRV;
-
-    private Instruction mInstruction;
 
     public RecipeChildFragment() {
     }
@@ -57,6 +57,8 @@ public class RecipeChildFragment extends Fragment implements InstructionAdapter.
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+        mInstruction = new Instruction();
 
         View rootView = inflater.inflate(R.layout.fragment_child, container, false);
         context = getActivity();
@@ -128,7 +130,10 @@ public class RecipeChildFragment extends Fragment implements InstructionAdapter.
 
         Class destinationClass = RecipeDisplayChildActivity.class;
         Intent intentToStartDetailActivity = new Intent(context, destinationClass);
+        step_index = mInstructionList.indexOf(instruction);
         intentToStartDetailActivity.putExtra(Intent.EXTRA_TITLE, instruction);
+        intentToStartDetailActivity.putParcelableArrayListExtra(Intent.EXTRA_SUBJECT, mInstructionList);
+        intentToStartDetailActivity.putExtra(Intent.EXTRA_TEXT, step_index);
         startActivity(intentToStartDetailActivity);
 
     }
