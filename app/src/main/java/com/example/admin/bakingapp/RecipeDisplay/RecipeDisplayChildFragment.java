@@ -90,6 +90,12 @@ public class RecipeDisplayChildFragment extends Fragment implements ExoPlayer.Ev
 
             mInstructionText = (TextView) rootView.findViewById(R.id.instruction_long);
 
+            // Initialize Prev/Next buttons
+
+            mPrevButton = (Button) rootView.findViewById(R.id.button_previous);
+            mNextButton = (Button) rootView.findViewById(R.id.button_next);
+            initializeNavButtons();
+
             String instruction_long = mInstruction.getLongDescription();
 
             String videoURL = mInstruction.getVideoURL();
@@ -111,6 +117,40 @@ public class RecipeDisplayChildFragment extends Fragment implements ExoPlayer.Ev
         return rootView;
 
     }
+
+    // Prev/Next buttons
+    private void initializeNavButtons() {
+        mPrevButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (step_index > 0) {
+                    step_index--;
+                    refreshStepDetails();
+                }
+            }
+        });
+        mNextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (step_index < mInstructionList.size() - 1) {
+                    step_index++;
+                    refreshStepDetails();
+                }
+            }
+        });
+    }
+
+
+    /**
+     * Refresh detail fragment.
+     */
+    private void refreshStepDetails() {
+        mInstructionText.setText(mInstructionList.get(step_index).getLongDescription());
+        releasePlayer();
+        initializePlayer(Uri.parse(mInstructionList.get(step_index).getVideoURL()));
+    }
+
+
 
     /**
      * Initializes the Media Session to be enabled with media buttons, transport controls, callbacks

@@ -31,7 +31,7 @@ public class RecipeDisplayChildActivity extends AppCompatActivity {
             //Get EXTRA from intent and attach to Fragment as Argument
             mInstruction = getIntent().getParcelableExtra("android.intent.extra.TITLE");
             mInstructionList = getIntent().getParcelableArrayListExtra("android.intent.extra.SUBJECT");
-            step_index = getIntent().getIntExtra("android.intent.extra.TITLE", -1);
+            step_index = getIntent().getIntExtra("android.intent.extra.TEXT", 0);
 
             Bundle args = new Bundle();
 
