@@ -1,6 +1,7 @@
 package com.example.admin.bakingapp.RecipeChild;
 
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -12,7 +13,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.example.admin.bakingapp.Data.RecipeContract;
 import com.example.admin.bakingapp.NetworkUtils;
 import com.example.admin.bakingapp.R;
 import com.example.admin.bakingapp.RecipeChild.Ingredients.Ingredient;
@@ -43,6 +46,10 @@ public class RecipeChildFragment extends Fragment implements InstructionAdapter.
     private ArrayList<Instruction> mInstructionList = new ArrayList<>();
 
     private Instruction mInstruction;
+
+    private String ingredientName;
+    private String ingredientMeasurement;
+    private Double ingredientQuantity;
 
     private IngredientAdapter mIngredientAdapter;
     private InstructionAdapter mInstructionAdapter;
@@ -164,7 +171,22 @@ public class RecipeChildFragment extends Fragment implements InstructionAdapter.
 
         @Override
         protected void onPostExecute(ArrayList<Ingredient> ingredientData) {
-            mIngredientAdapter.setIngredientData(ingredientData);
+            if (ingredientData != null) {
+                mIngredientAdapter.setIngredientData(ingredientData);
+
+                for (Ingredient ingredient : ingredientData) {
+                    ingredientName = ingredient.getIngredientName();
+                    ingredientMeasurement = ingredient.getIngredientMeasure();
+                    ingredientQuantity = ingredient.getIngredientQuantity();
+                    // Create new empty ContentValues object
+                    ContentValues contentValues = new ContentValues();
+                    contentValues.put(RecipeContract.RecipeEntry.COLUMN_RECIPE_NAME_INGREDIENT, ingredientName);
+                    contentValues.put(RecipeContract.RecipeEntry.COLUMN_RECIPE_MEASUREMENT_INGREDIENT, ingredientMeasurement);
+                    contentValues.put(RecipeContract.RecipeEntry.COLUMN_RECIPE_QUANTITY_INGREDIENT, ingredientQuantity);
+                    // Insert the content values via a ContentResolver
+                    getActivity().getContentResolver().insert(RecipeContract.RecipeEntry.CONTENT_URI, contentValues);
+                }
+            }
         }
 
     }

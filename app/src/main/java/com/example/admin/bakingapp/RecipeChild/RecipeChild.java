@@ -2,11 +2,8 @@ package com.example.admin.bakingapp.RecipeChild;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.admin.bakingapp.Data.RecipeContract;
 import com.example.admin.bakingapp.NetworkUtils;
@@ -22,9 +20,7 @@ import com.example.admin.bakingapp.Recipe.Recipe;
 import com.example.admin.bakingapp.RecipeChild.Ingredients.Ingredient;
 import com.example.admin.bakingapp.RecipeChild.Ingredients.IngredientAdapter;
 import com.example.admin.bakingapp.RecipeChild.Ingredients.IngredientJSONData;
-import com.example.admin.bakingapp.RecipeChild.Instructions.Instruction;
-import com.example.admin.bakingapp.RecipeDisplay.RecipeDisplayChildActivity;
-import com.example.admin.bakingapp.RecipeDisplay.RecipeDisplayChildFragment;
+import com.example.admin.bakingapp.Recipes;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -40,8 +36,11 @@ public class RecipeChild extends AppCompatActivity implements AdapterView.OnItem
 
     private Recipe mRecipe;
 
-    private TextView RecipeName;
-    private String name;
+    private ArrayList<Ingredient> mIngredient = new ArrayList<>();
+
+    private String ingredientName;
+    private String ingredientMeasurement;
+    private Double ingredientQuantity;
 
     String RECIPE_BASE_URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
 
@@ -124,6 +123,7 @@ public class RecipeChild extends AppCompatActivity implements AdapterView.OnItem
                 ArrayList simpleJsonIngredientData = IngredientJSONData
                         .getIngredientDataStringsFromJson(context, jsonRecipeResponse);
 
+                mIngredient = simpleJsonIngredientData;
 
                 return simpleJsonIngredientData;
 
@@ -135,9 +135,25 @@ public class RecipeChild extends AppCompatActivity implements AdapterView.OnItem
 
         @Override
         protected void onPostExecute(ArrayList<Ingredient> ingredientData) {
-            mIngredientAdapter.setIngredientData(ingredientData);
-        }
+            if (ingredientData == null) {
+                Toast.makeText(RecipeChild.this, "Not connected to the internet", Toast.LENGTH_SHORT).show();
+            } else {
+                mIngredientAdapter.setIngredientData(ingredientData);
 
+                for (Ingredient ingredient : ingredientData) {
+                    ingredientName = ingredient.getIngredientName();
+                    ingredientMeasurement = ingredient.getIngredientMeasure();
+                    ingredientQuantity = ingredient.getIngredientQuantity();
+                    // Create new empty ContentValues object
+                    ContentValues contentValues = new ContentValues();
+                    contentValues.put(RecipeContract.RecipeEntry.COLUMN_RECIPE_NAME_INGREDIENT, ingredientName);
+                    contentValues.put(RecipeContract.RecipeEntry.COLUMN_RECIPE_MEASUREMENT_INGREDIENT, ingredientMeasurement);
+                    contentValues.put(RecipeContract.RecipeEntry.COLUMN_RECIPE_QUANTITY_INGREDIENT, ingredientQuantity);
+                    // Insert the content values via a ContentResolver
+                    getContentResolver().insert(RecipeContract.RecipeEntry.CONTENT_URI, contentValues);
+                }
+            }
+        }
     }
 
 

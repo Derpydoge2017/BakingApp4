@@ -28,14 +28,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
     private RecyclerView mRecyclerView;
     private RecipeAdapter mRecipeAdapter;
 
-    private String recipeName;
-    private String ingredientName;
-    private String ingredientMeasurement;
-    private Double ingredientQuantity;
-
     String RECIPE_BASE_URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
-
-    private ArrayList<Recipes> mRecipes = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,11 +112,6 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
                 ArrayList simpleJsonRecipeData = RecipeJSONData
                         .getRecipeDataStringsFromJson(MainActivity.this, jsonRecipeResponse);
 
-                ArrayList simpleJsonAllData = RecipeJSON
-                        .getRecipeDataStringsFromJson(MainActivity.this, jsonRecipeResponse);
-
-                mRecipes = simpleJsonAllData;
-
                 return simpleJsonRecipeData;
 
             } catch (Exception e) {
@@ -139,22 +127,6 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
             } else {
                 mRecipeAdapter.setRecipeData(recipeData);
             }
-
-            for (Recipes recipe : mRecipes) {
-                recipeName = recipe.getRecipeName();
-                ingredientName = recipe.getIngredientName();
-                ingredientMeasurement = recipe.getIngredientMeasure();
-                ingredientQuantity = recipe.getIngredientQuantity();
-            }
-
-            // Create new empty ContentValues object
-            ContentValues contentValues = new ContentValues();
-            contentValues.put(RecipeContract.RecipeEntry.COLUMN_RECIPE_NAME, recipeName);
-            contentValues.put(RecipeContract.RecipeEntry.COLUMN_RECIPE_NAME_INGREDIENT, ingredientName);
-            contentValues.put(RecipeContract.RecipeEntry.COLUMN_RECIPE_MEASUREMENT_INGREDIENT, ingredientMeasurement);
-            contentValues.put(RecipeContract.RecipeEntry.COLUMN_RECIPE_QUANTITY_INGREDIENT, ingredientQuantity);
-            // Insert the content values via a ContentResolver
-            getContentResolver().insert(RecipeContract.RecipeEntry.CONTENT_URI, contentValues);
 
         }
 

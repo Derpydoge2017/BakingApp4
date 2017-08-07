@@ -42,7 +42,6 @@ public class RecipeContract {
         // Task table and column names
         public static final String TABLE_NAME = "recipeList";
 
-        public static final String COLUMN_RECIPE_NAME = "recipeName";
         public static final String COLUMN_RECIPE_NAME_INGREDIENT = "recipeIngredientName";
         public static final String COLUMN_RECIPE_MEASUREMENT_INGREDIENT = "recipeIngredientMeasurement";
         public static final String COLUMN_RECIPE_QUANTITY_INGREDIENT = "recipeIngredientQuantity";

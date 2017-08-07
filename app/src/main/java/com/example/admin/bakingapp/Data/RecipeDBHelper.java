@@ -45,7 +45,6 @@ public class RecipeDBHelper extends SQLiteOpenHelper {
         // Create tasks table (careful to follow SQL formatting rules)
         final String CREATE_TABLE = "CREATE TABLE "  + RecipeContract.RecipeEntry.TABLE_NAME + " (" +
                         RecipeContract.RecipeEntry._ID                + " INTEGER PRIMARY KEY, " +
-                        RecipeContract.RecipeEntry.COLUMN_RECIPE_NAME + " TEXT NOT NULL, " +
                         RecipeContract.RecipeEntry.COLUMN_RECIPE_QUANTITY_INGREDIENT + " TEXT NOT NULL, " +
                         RecipeContract.RecipeEntry.COLUMN_RECIPE_MEASUREMENT_INGREDIENT + " TEXT NOT NULL, " +
                         RecipeContract.RecipeEntry.COLUMN_RECIPE_NAME_INGREDIENT + " DOUBLE NOT NULL);";
