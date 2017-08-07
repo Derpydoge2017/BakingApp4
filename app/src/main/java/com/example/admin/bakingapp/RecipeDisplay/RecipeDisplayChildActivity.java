@@ -21,6 +21,8 @@ public class RecipeDisplayChildActivity extends AppCompatActivity {
 
     private ArrayList<Instruction> mInstructionList;
 
+    private Boolean isTwoPane;
+
     private int step_index;
 
     @Override

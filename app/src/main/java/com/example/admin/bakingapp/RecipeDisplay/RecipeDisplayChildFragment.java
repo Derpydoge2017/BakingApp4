@@ -69,6 +69,8 @@ public class RecipeDisplayChildFragment extends Fragment implements ExoPlayer.Ev
     private Button mPrevButton;
     private Button mNextButton;
 
+    private boolean isTwoPane;
+
     public RecipeDisplayChildFragment(){
 
     }
@@ -84,17 +86,20 @@ public class RecipeDisplayChildFragment extends Fragment implements ExoPlayer.Ev
             mInstruction = getArguments().getParcelable("ARGUMENTS");
             mInstructionList = getArguments().getParcelableArrayList("SUBJECT");
             step_index = getArguments().getInt("TEXT");
+            isTwoPane = getArguments().getBoolean("Boolean");
 
-            // Initialize the player view.
+            // Initialize the player view
             mPlayerView = (SimpleExoPlayerView) rootView.findViewById(R.id.playerView);
 
             mInstructionText = (TextView) rootView.findViewById(R.id.instruction_long);
 
-            // Initialize Prev/Next buttons
+            if (!isTwoPane) {
+                // Initialize Prev/Next button
+                mPrevButton = (Button) rootView.findViewById(R.id.button_previous);
+                mNextButton = (Button) rootView.findViewById(R.id.button_next);
 
-            mPrevButton = (Button) rootView.findViewById(R.id.button_previous);
-            mNextButton = (Button) rootView.findViewById(R.id.button_next);
-            initializeNavButtons();
+                initializeNavButtons();
+            }
 
             String instruction_long = mInstruction.getLongDescription();
 

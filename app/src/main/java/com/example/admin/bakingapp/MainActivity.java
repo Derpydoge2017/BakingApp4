@@ -18,6 +18,7 @@ import com.example.admin.bakingapp.Recipe.Recipe;
 import com.example.admin.bakingapp.Recipe.RecipeAdapter;
 import com.example.admin.bakingapp.Recipe.RecipeJSONData;
 import com.example.admin.bakingapp.RecipeChild.RecipeChild;
+import com.facebook.stetho.Stetho;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Stetho.initializeWithDefaults(this);
 
         /*
          * Using findViewById, we get a reference to our RecyclerView from xml. This allows us to
@@ -79,7 +81,6 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
      */
     private void loadRecipeData() {
         new RecipeQueryTask().execute();
-
         showRecipeDataView();
     }
 

@@ -21,6 +21,6 @@
         android:layout_centerVertical="true"
         android:layout_below="@+id/widget_name"
 
-        android:background="#ffff" />
+        android:background="#F00" />
 
 </RelativeLayout>

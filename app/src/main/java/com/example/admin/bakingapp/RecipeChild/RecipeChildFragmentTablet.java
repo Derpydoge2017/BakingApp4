@@ -35,6 +35,8 @@ public class RecipeChildFragmentTablet extends Fragment implements InstructionAd
     private InstructionAdapter mInstructionAdapter;
     private RecyclerView mInstructionRV;
 
+    private Boolean isTwoPane;
+
     public RecipeChildFragmentTablet() {
     }
 
@@ -43,8 +45,12 @@ public class RecipeChildFragmentTablet extends Fragment implements InstructionAd
 
         super.onCreate(savedInstanceState);
 
+
+
         View rootView = inflater.inflate(R.layout.fragment_child, container, false);
         context = getActivity();
+
+        isTwoPane = getArguments().getBoolean("Boolean");
 
         mInstructionRV = (RecyclerView) rootView.findViewById(R.id.instruction_rv);
 
@@ -79,6 +85,7 @@ public class RecipeChildFragmentTablet extends Fragment implements InstructionAd
         Bundle args = new Bundle();
 
         args.putParcelable("ARGUMENTS", instruction);
+        args.putBoolean("Boolean", isTwoPane);
 
         RecipeDisplayChildFragment displayChildFragment = new RecipeDisplayChildFragment();
         displayChildFragment.setArguments(args);

@@ -40,7 +40,7 @@ public class WidgetRemoteViewFactory implements RemoteViewsService.RemoteViewsFa
             data.close();
         }
         final long identityToken = Binder.clearCallingIdentity();
-        data = context.getContentResolver().query(Uri.parse(RecipeContract.RecipeEntry.TABLE_NAME), null, null, null, null);
+        data = context.getContentResolver().query(RecipeContract.RecipeEntry.CONTENT_URI, null, null, null, null);
         Binder.restoreCallingIdentity(identityToken);
     }
 
@@ -72,6 +72,7 @@ public class WidgetRemoteViewFactory implements RemoteViewsService.RemoteViewsFa
         remoteViews.setTextViewText(R.id.widget_ingredientName, ingredientName);
 
         return remoteViews;
+
     }
 
     @Override
@@ -81,17 +82,17 @@ public class WidgetRemoteViewFactory implements RemoteViewsService.RemoteViewsFa
 
     @Override
     public int getViewTypeCount() {
-        return 0;
+        return 1;
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return data.moveToPosition(position) ? data.getLong(0) : position;
     }
 
     @Override
     public boolean hasStableIds() {
-        return false;
+        return true;
     }
 
 }

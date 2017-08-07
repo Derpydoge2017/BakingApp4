@@ -2,6 +2,7 @@ package com.example.admin.bakingapp.RecipeChild;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import com.example.admin.bakingapp.RecipeChild.Ingredients.Ingredient;
 import com.example.admin.bakingapp.RecipeChild.Ingredients.IngredientAdapter;
 import com.example.admin.bakingapp.RecipeChild.Ingredients.IngredientJSONData;
 import com.example.admin.bakingapp.RecipeChild.Instructions.Instruction;
+import com.example.admin.bakingapp.RecipeDisplay.RecipeDisplayChildActivity;
 import com.example.admin.bakingapp.RecipeDisplay.RecipeDisplayChildFragment;
 
 import java.net.URL;
@@ -74,7 +76,12 @@ public class RecipeChild extends AppCompatActivity implements AdapterView.OnItem
 
                 loadIngredientData();
 
+                Bundle args = new Bundle();
+
+                args.putBoolean("Boolean", isTwoPane);
+
                 RecipeChildFragmentTablet tabletChildFragment = new RecipeChildFragmentTablet();
+                tabletChildFragment.setArguments(args);
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragmentInstructionList, tabletChildFragment).commit();
 
             } else {
