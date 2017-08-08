@@ -3,6 +3,11 @@ package com.example.admin.bakingapp.Recipe;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.admin.bakingapp.RecipeChild.Ingredients.Ingredient;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Admin on 20-May-17.
  */
@@ -12,6 +17,7 @@ public class Recipe implements Parcelable {
     private Integer recipeId;
     private String recipeName;
     private String recipeImageURL;
+    private ArrayList<Ingredient> ingredientList;
 
     public Recipe() {
 
@@ -23,6 +29,15 @@ public class Recipe implements Parcelable {
 
     public void setRecipeId(Integer id) {
         this.recipeId = id;
+    }
+
+
+    public ArrayList<Ingredient> getIngredientList() {
+        return ingredientList;
+    }
+
+    public void setIngredientList(ArrayList<Ingredient> list) {
+        this.ingredientList = list;
     }
 
 
@@ -48,6 +63,7 @@ public class Recipe implements Parcelable {
         recipeId = in.readInt();
         recipeName = in.readString();
         recipeImageURL = in.readString();
+        this.ingredientList = in.readArrayList(null);
     }
 
     @Override
@@ -60,6 +76,7 @@ public class Recipe implements Parcelable {
         dest.writeInt(recipeId);
         dest.writeString(recipeName);
         dest.writeString(recipeImageURL);
+        dest.writeList(ingredientList);
     }
 
     @SuppressWarnings("unused")

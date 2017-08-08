@@ -67,9 +67,7 @@ public final class InstructionJSONData {
                 instruction.setVideoURL(videoUrl);
                 instruction.setThumbnailURL(thumbnailURL);
 
-
                 instructionList.add(instruction);
-
 
             }
 

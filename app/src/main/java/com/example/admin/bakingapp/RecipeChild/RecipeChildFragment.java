@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.admin.bakingapp.Data.RecipeContract;
 import com.example.admin.bakingapp.NetworkUtils;
 import com.example.admin.bakingapp.R;
+import com.example.admin.bakingapp.Recipe.Recipe;
 import com.example.admin.bakingapp.RecipeChild.Ingredients.Ingredient;
 import com.example.admin.bakingapp.RecipeChild.Ingredients.IngredientAdapter;
 import com.example.admin.bakingapp.RecipeChild.Ingredients.IngredientJSONData;
@@ -170,7 +171,7 @@ public class RecipeChildFragment extends Fragment implements InstructionAdapter.
         }
 
         @Override
-        protected void onPostExecute(ArrayList<Ingredient> ingredientData) {
+        protected void onPostExecute(ArrayList<Recipe> ingredientData) {
             if (ingredientData != null) {
                 mIngredientAdapter.setIngredientData(ingredientData);
 

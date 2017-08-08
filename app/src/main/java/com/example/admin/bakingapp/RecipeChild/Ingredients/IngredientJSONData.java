@@ -3,6 +3,8 @@ package com.example.admin.bakingapp.RecipeChild.Ingredients;
 
 import android.content.Context;
 
+import com.example.admin.bakingapp.Recipe.Recipe;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,7 +20,7 @@ public final class IngredientJSONData {
      * @return Array of Strings describing ingredient data
      * @throws JSONException If JSON data cannot be properly parsed
      */
-    public static ArrayList<Ingredient> getIngredientDataStringsFromJson(Context context, String ingredientJsonStr)
+    public static ArrayList<Recipe> getIngredientDataStringsFromJson(Context context, String ingredientJsonStr)
             throws JSONException {
 
         /* Recipe information */
@@ -31,13 +33,17 @@ public final class IngredientJSONData {
 
         JSONArray recipeArray = new JSONArray(ingredientJsonStr);
 
-        ArrayList<Ingredient> ingredientList = new ArrayList<Ingredient>();
+        ArrayList<Recipe> recipeList = new ArrayList<Recipe>();
 
         for (int i = 0; i < recipeArray.length(); i++) {
 
             JSONObject recipeJSON = recipeArray.getJSONObject(i);
 
             JSONArray ingredientArray = recipeJSON.getJSONArray(INGREDIENT_LIST);
+
+            Recipe recipe = new Recipe();
+
+            ArrayList<Ingredient> ingredientList = new ArrayList<Ingredient>();
 
             for (int x = 0; x < ingredientArray.length(); x++) {
 
@@ -62,12 +68,14 @@ public final class IngredientJSONData {
 
                 ingredientList.add(ingredient);
 
-
             }
+
+            recipe.setIngredientList(ingredientList);
+            recipeList.add(recipe);
 
         }
 
-        return ingredientList;
+        return recipeList;
 
     }
 }
