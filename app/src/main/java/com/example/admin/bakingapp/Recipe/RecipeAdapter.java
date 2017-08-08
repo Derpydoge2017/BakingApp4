@@ -131,8 +131,16 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeAdap
         recipeAdapterViewHolder.mRecipeName.setText(recipeName);
 
         String recipeImageURL = recipeDetails.getRecipeImageURL();
-        if (recipeImageURL == "") {
+        if (!(recipeImageURL.equals(""))) {
             Picasso.with(context).load(recipeImageURL).into(recipeAdapterViewHolder.mRecipeImage);
+        } else if(recipeName.equals("Nutella Pie")) {
+            recipeAdapterViewHolder.mRecipeImage.setImageResource(R.drawable.nutella);
+        } else if(recipeName.equals("Brownies")) {
+            recipeAdapterViewHolder.mRecipeImage.setImageResource(R.drawable.brownies);
+        } else if(recipeName.equals("Yellow Cake")) {
+            recipeAdapterViewHolder.mRecipeImage.setImageResource(R.drawable.yellow);
+        } else if(recipeName.equals("Cheesecake")) {
+            recipeAdapterViewHolder.mRecipeImage.setImageResource(R.drawable.cheesecake);
         }
     }
 

@@ -321,7 +321,9 @@ public class RecipeDisplayChildFragment extends Fragment implements ExoPlayer.Ev
                     mExoPlayer.getCurrentPosition(), 1f);
         }
         mMediaSession.setPlaybackState(mStateBuilder.build());
-        showNotification(mStateBuilder.build());
+        if(isAdded()) {
+            showNotification(mStateBuilder.build());
+        }
     }
 
     @Override
