@@ -43,6 +43,8 @@ public class RecipeChildFragment extends Fragment implements InstructionAdapter.
 
     private int step_index;
 
+    private int recipeIndex;
+
     private ArrayList<Ingredient> mIngredientList = new ArrayList<>();
     private ArrayList<Instruction> mInstructionList = new ArrayList<>();
 
@@ -67,6 +69,8 @@ public class RecipeChildFragment extends Fragment implements InstructionAdapter.
         super.onCreate(savedInstanceState);
 
         mInstruction = new Instruction();
+
+        recipeIndex = getArguments().getInt("RecipeIndex");
 
         View rootView = inflater.inflate(R.layout.fragment_child, container, false);
         context = getActivity();
@@ -158,7 +162,7 @@ public class RecipeChildFragment extends Fragment implements InstructionAdapter.
                         .getResponseFromHttpUrl(recipeSearchUrl);
 
                 ArrayList simpleJsonIngredientData = IngredientJSONData
-                        .getIngredientDataStringsFromJson(context, jsonRecipeResponse);
+                        .getIngredientDataStringsFromJson(context, jsonRecipeResponse, recipeIndex);
 
                 mIngredientList = simpleJsonIngredientData;
 
@@ -171,7 +175,7 @@ public class RecipeChildFragment extends Fragment implements InstructionAdapter.
         }
 
         @Override
-        protected void onPostExecute(ArrayList<Recipe> ingredientData) {
+        protected void onPostExecute(ArrayList<Ingredient> ingredientData) {
             if (ingredientData != null) {
                 mIngredientAdapter.setIngredientData(ingredientData);
 
@@ -203,7 +207,7 @@ public class RecipeChildFragment extends Fragment implements InstructionAdapter.
                         .getResponseFromHttpUrl(recipeSearchUrl);
 
                 ArrayList simpleJsonInstructionData = InstructionJSONData
-                        .getInstructionDataStringsFromJson(context, jsonRecipeResponse);
+                        .getInstructionDataStringsFromJson(context, jsonRecipeResponse, recipeIndex);
 
                 mInstructionList = simpleJsonInstructionData;
 

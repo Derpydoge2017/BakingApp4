@@ -35,6 +35,8 @@ public class RecipeChildFragmentTablet extends Fragment implements InstructionAd
     private InstructionAdapter mInstructionAdapter;
     private RecyclerView mInstructionRV;
 
+    private int recipeIndex;
+
     private Boolean isTwoPane;
 
     public RecipeChildFragmentTablet() {
@@ -51,6 +53,8 @@ public class RecipeChildFragmentTablet extends Fragment implements InstructionAd
         context = getActivity();
 
         isTwoPane = getArguments().getBoolean("Boolean");
+
+        recipeIndex = getArguments().getInt("RecipeIndex");
 
         mInstructionRV = (RecyclerView) rootView.findViewById(R.id.instruction_rv);
 
@@ -103,7 +107,7 @@ public class RecipeChildFragmentTablet extends Fragment implements InstructionAd
                         .getResponseFromHttpUrl(recipeSearchUrl);
 
                 ArrayList simpleJsonInstructionData = InstructionJSONData
-                        .getInstructionDataStringsFromJson(context, jsonRecipeResponse);
+                        .getInstructionDataStringsFromJson(context, jsonRecipeResponse, recipeIndex);
 
                 return simpleJsonInstructionData;
 

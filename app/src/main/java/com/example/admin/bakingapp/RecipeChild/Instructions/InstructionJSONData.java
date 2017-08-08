@@ -17,7 +17,7 @@ public final class InstructionJSONData {
      * @return Array of Strings describing ingredient data
      * @throws JSONException If JSON data cannot be properly parsed
      */
-    public static ArrayList<Instruction> getInstructionDataStringsFromJson(Context context, String instructionJsonStr)
+    public static ArrayList<Instruction> getInstructionDataStringsFromJson(Context context, String instructionJsonStr, int index)
             throws JSONException {
 
         /* Instruction information */
@@ -32,6 +32,7 @@ public final class InstructionJSONData {
 
         JSONArray recipeArray = new JSONArray(instructionJsonStr);
 
+        /*
         ArrayList<Instruction> instructionList = new ArrayList<Instruction>();
 
         for (int i = 0; i < recipeArray.length(); i++) {
@@ -44,14 +45,14 @@ public final class InstructionJSONData {
 
                 Instruction instruction = new Instruction();
 
-                /* These are the values that will be collected */
+                //These are the values that will be collected
                 String shortDescription;
                 String longDescription;
                 Integer id;
                 String videoUrl;
                 String thumbnailURL;
 
-                /* Get the JSON object for the movie */
+                // Get the JSON object for the movie
                 JSONObject instructionObject = instructionArray.getJSONObject(x);
 
                 // Extract relevant JSON fields
@@ -72,8 +73,44 @@ public final class InstructionJSONData {
             }
 
 
+        } */
 
-        }
+        ArrayList<Instruction> instructionList = new ArrayList<Instruction>();
+
+            JSONObject recipeJSON = recipeArray.getJSONObject(index);
+
+            JSONArray instructionArray = recipeJSON.getJSONArray(INSTRUCTION_LIST);
+
+            for (int x = 0; x < instructionArray.length(); x++) {
+
+                Instruction instruction = new Instruction();
+
+                //These are the values that will be collected
+                String shortDescription;
+                String longDescription;
+                Integer id;
+                String videoUrl;
+                String thumbnailURL;
+
+                // Get the JSON object for the movie
+                JSONObject instructionObject = instructionArray.getJSONObject(x);
+
+                // Extract relevant JSON fields
+                shortDescription = instructionObject.getString(INSTRUCTION_SHORT_DESCRIPTION);
+                longDescription = instructionObject.getString(INSTRUCTION_LONG_DESCRIPTION);
+                id = instructionObject.getInt(INSTRUCTION_ID);
+                videoUrl = instructionObject.getString(INSTRUCTION_VIDEO);
+                thumbnailURL = instructionObject.getString(INSTRUCTION_IMAGE);
+
+                instruction.setShortDescription(shortDescription);
+                instruction.setLongDescription(longDescription);
+                instruction.setInstructionId(id);
+                instruction.setVideoURL(videoUrl);
+                instruction.setThumbnailURL(thumbnailURL);
+
+                instructionList.add(instruction);
+
+            }
 
         return instructionList;
 

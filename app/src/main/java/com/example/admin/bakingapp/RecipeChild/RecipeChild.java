@@ -46,6 +46,8 @@ public class RecipeChild extends AppCompatActivity implements AdapterView.OnItem
 
     private Context context;
 
+    private int recipeIndex;
+
     private RecyclerView mIngredientRV;
 
     public static final String STEP_DETAILS = "step_details";
@@ -63,7 +65,11 @@ public class RecipeChild extends AppCompatActivity implements AdapterView.OnItem
         //Get EXTRA from intent and attach to Fragment as Argument
 
         if (savedInstanceState == null) {
+
             mRecipe = getIntent().getParcelableExtra("android.intent.extra.TITLE");
+
+            recipeIndex = getIntent().getIntExtra("android.intent.extra.TEXT", 0);
+
             if (isTwoPane) {
 
                 Context context = this;
@@ -78,6 +84,7 @@ public class RecipeChild extends AppCompatActivity implements AdapterView.OnItem
                 Bundle args = new Bundle();
 
                 args.putBoolean("Boolean", isTwoPane);
+                args.putInt("RecipeIndex",recipeIndex);
 
                 RecipeChildFragmentTablet tabletChildFragment = new RecipeChildFragmentTablet();
                 tabletChildFragment.setArguments(args);
@@ -86,6 +93,9 @@ public class RecipeChild extends AppCompatActivity implements AdapterView.OnItem
             } else {
 
                 RecipeChildFragment recipeChildFragment = new RecipeChildFragment();
+                Bundle args = new Bundle();
+                args.putInt("RecipeIndex",recipeIndex);
+                recipeChildFragment.setArguments(args);
                 getSupportFragmentManager().beginTransaction().replace(R.id.recipeChildContainer, recipeChildFragment).commit();
 
             }
@@ -112,7 +122,6 @@ public class RecipeChild extends AppCompatActivity implements AdapterView.OnItem
     }
 
     public class IngredientQueryTask extends AsyncTask<String, Void, ArrayList<Ingredient>> {
-
         @Override
         protected ArrayList doInBackground(String... params) {
             URL recipeSearchUrl = NetworkUtils.buildUrl(RECIPE_BASE_URL);
@@ -121,7 +130,7 @@ public class RecipeChild extends AppCompatActivity implements AdapterView.OnItem
                         .getResponseFromHttpUrl(recipeSearchUrl);
 
                 ArrayList simpleJsonIngredientData = IngredientJSONData
-                        .getIngredientDataStringsFromJson(context, jsonRecipeResponse);
+                        .getIngredientDataStringsFromJson(context, jsonRecipeResponse, recipeIndex);
 
                 mIngredient = simpleJsonIngredientData;
 

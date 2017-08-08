@@ -28,6 +28,10 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
     private RecyclerView mRecyclerView;
     private RecipeAdapter mRecipeAdapter;
 
+    private int recipeIndex;
+
+    private ArrayList<Recipe> recipeList = new ArrayList<>();
+
     String RECIPE_BASE_URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
 
     @Override
@@ -88,8 +92,10 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
     public void onClick(Recipe recipeDetails) {
         Context context = this;
         Class destinationClass = RecipeChild.class;
+        recipeIndex = recipeList.indexOf(recipeDetails);
         Intent intentToStartDetailActivity = new Intent(context, destinationClass);
         intentToStartDetailActivity.putExtra(Intent.EXTRA_TITLE, recipeDetails);
+        intentToStartDetailActivity.putExtra(Intent.EXTRA_TEXT, recipeIndex);
         startActivity(intentToStartDetailActivity);
     }
 
@@ -111,6 +117,8 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
 
                 ArrayList simpleJsonRecipeData = RecipeJSONData
                         .getRecipeDataStringsFromJson(MainActivity.this, jsonRecipeResponse);
+
+                recipeList = simpleJsonRecipeData;
 
                 return simpleJsonRecipeData;
 

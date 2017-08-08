@@ -20,7 +20,7 @@ public final class IngredientJSONData {
      * @return Array of Strings describing ingredient data
      * @throws JSONException If JSON data cannot be properly parsed
      */
-    public static ArrayList<Recipe> getIngredientDataStringsFromJson(Context context, String ingredientJsonStr)
+    public static ArrayList<Ingredient> getIngredientDataStringsFromJson(Context context, String ingredientJsonStr, int index)
             throws JSONException {
 
         /* Recipe information */
@@ -33,8 +33,9 @@ public final class IngredientJSONData {
 
         JSONArray recipeArray = new JSONArray(ingredientJsonStr);
 
-        ArrayList<Recipe> recipeList = new ArrayList<Recipe>();
 
+        /*
+        ArrayList<Recipe> recipeList = new ArrayList<Recipe>();
         for (int i = 0; i < recipeArray.length(); i++) {
 
             JSONObject recipeJSON = recipeArray.getJSONObject(i);
@@ -49,12 +50,12 @@ public final class IngredientJSONData {
 
                 Ingredient ingredient = new Ingredient();
 
-                /* These are the values that will be collected */
+                // These are the values that will be collected
                 String ingredientName;
                 String ingredientMeasure;
                 Double ingredientQuantity;
 
-                /* Get the JSON object for the movie */
+                // Get the JSON object for the movie
                 JSONObject ingredientObject = ingredientArray.getJSONObject(x);
 
                 // Extract relevant JSON fields
@@ -70,12 +71,40 @@ public final class IngredientJSONData {
 
             }
 
-            recipe.setIngredientList(ingredientList);
-            recipeList.add(recipe);
+        }*/
+
+        JSONObject recipeJSON = recipeArray.getJSONObject(index);
+
+        JSONArray ingredientArray = recipeJSON.getJSONArray(INGREDIENT_LIST);
+
+        ArrayList<Ingredient> ingredientList = new ArrayList<Ingredient>();
+
+        for (int x = 0; x < ingredientArray.length(); x++) {
+
+            Ingredient ingredient = new Ingredient();
+
+            /* These are the values that will be collected */
+            String ingredientName;
+            String ingredientMeasure;
+            Double ingredientQuantity;
+
+            /* Get the JSON object for the movie */
+            JSONObject ingredientObject = ingredientArray.getJSONObject(x);
+
+            // Extract relevant JSON fields
+            ingredientName = ingredientObject.getString(INGREDIENT_NAME);
+            ingredientMeasure = ingredientObject.getString(INGREDIENT_MEASURE);
+            ingredientQuantity = ingredientObject.getDouble(INGREDIENT_QUANTITY);
+
+            ingredient.setIngredientName(ingredientName);
+            ingredient.setIngredientMeasure(ingredientMeasure);
+            ingredient.setIngredientQuantity(ingredientQuantity);
+
+            ingredientList.add(ingredient);
 
         }
 
-        return recipeList;
+        return ingredientList;
 
     }
 }
